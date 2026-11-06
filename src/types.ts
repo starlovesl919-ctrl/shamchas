@@ -33,6 +33,33 @@ export interface WorkflowUpdateMessage {
 	timestamp: number;
 }
 
+/**
+ * Sham Cash gateway types, shared by the Worker API and the console UI
+ */
+
+export type CurrencyCode = "USD" | "SYP";
+
+export interface GatewayBill {
+	billNo: string;
+	amount: string;
+	currencyId: number;
+	note: string | null;
+	statusId: number;
+	statusName: string;
+	tranId: number | null;
+	paymentUrl: string;
+	createdAt: number;
+	updatedAt: number;
+	paidAt: number | null;
+	source: "create" | "refresh" | "webhook";
+}
+
+export interface GatewayConfig {
+	configured: boolean;
+	callbackUrl: string;
+	missing: string[];
+}
+
 // Step definitions for the workflow
 export const WORKFLOW_STEPS: StepDefinition[] = [
 	{

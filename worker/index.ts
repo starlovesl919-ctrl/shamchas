@@ -2,6 +2,8 @@
 export { MyWorkflow } from "./workflow";
 export { WorkflowStatusDO } from "./durable-object";
 
+import { handleShamCashRequest } from "./shamcash/routes";
+
 /**
  * Main Worker fetch handler
  *
@@ -14,6 +16,11 @@ export { WorkflowStatusDO } from "./durable-object";
 export default {
 	async fetch(request: Request, env: Env): Promise<Response> {
 		const url = new URL(request.url);
+
+		// Sham Cash gateway: bills, connection state and the encrypted webhook
+		if (url.pathname.startsWith("/api/shamcash/")) {
+			return handleShamCashRequest(request, env);
+		}
 
 		// API: Start a new workflow instance
 		if (url.pathname === "/api/workflow/start" && request.method === "POST") {

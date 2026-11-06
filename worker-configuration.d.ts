@@ -4,6 +4,15 @@
 interface __BaseEnv_Env {
 	WORKFLOW_STATUS: DurableObjectNamespace<import("./worker/index").WorkflowStatusDO>;
 	MY_WORKFLOW: Workflow<Parameters<import("./worker/index").MyWorkflow['run']>[0]['payload']>;
+	BILLS: KVNamespace;
+	/** Sham Cash merchant base URL, e.g. https://dev.shamlogix.tech/services */
+	SHAMCASH_BASE_URL?: string;
+	/** Sham Cash agent key identifying this application */
+	SHAMCASH_AGENT_KEY?: string;
+	/** Sham Cash Base64-encoded 32-byte secret used to encrypt requests and decrypt webhooks */
+	SHAMCASH_SECRET_KEY?: string;
+	/** Public origin Sham Cash can reach, used for the webhook and return URLs */
+	PUBLIC_BASE_URL?: string;
 }
 declare namespace Cloudflare {
 	interface GlobalProps {
